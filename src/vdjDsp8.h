@@ -2,7 +2,7 @@
 //
 // VirtualDJ
 // Plugin SDK
-// (c)Atomix Productions 2011-2013
+// (c)Atomix Productions 2011-2025
 //
 //////////////////////////////////////////////////////////////////////////
 //
@@ -38,6 +38,29 @@ public:
 	int SongBpm;			// number of samples between two consecutive beats for this song
 	double SongPosBeats;	// number of beats from the first beat in the song
 };
+
+class IVdjPluginPositionDsp8 : public IVdjPlugin8
+{
+public:
+	// called when the plugin is started or stopped
+	virtual HRESULT VDJ_API OnStart() { return 0; }
+	virtual HRESULT VDJ_API OnStop() { return 0; }
+
+	//When called, songPos can be modified
+	virtual HRESULT VDJ_API OnTransformPosition(double* songPos, double* videoPos, float* volume, float* srcVolume) = 0;
+
+	// This function will be called each time VirtualDJ needs your plugin
+	// to be applied on a new sound buffer
+	// NOTE: samples are stereo (interleaved), so you need to process up to buffer[2*nb]
+	virtual HRESULT VDJ_API OnProcessSamples(float* buffer, int nb) { return 0; }
+
+	// Some useful variables
+	int SampleRate;			// samplerate of the audio engine
+	int SongBpm;			// number of samples between two consecutive beats for this song
+	int SongPos;			// number of samples from beginning of song
+	double SongPosBeats;	// number of beats from the first beat in the song
+};
+
 
 //////////////////////////////////////////////////////////////////////////
 // Buffer plugin class
