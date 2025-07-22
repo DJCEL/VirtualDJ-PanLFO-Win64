@@ -81,6 +81,13 @@ static const GUID IID_IVdjPluginBuffer8 = { 0x1d00e65f, 0x44c7, 0x41bf, { 0xa3, 
 extern static const GUID IID_IVdjPluginBuffer8;
 #endif
 
+#ifndef VDJPOSITION8GUID_DEFINED
+#define VDJPOSITION8GUID_DEFINED
+static const GUID IID_IVdjPluginPosition8 = { 0x945ea55a, 0x05dd, 0x4f75, { 0xa8, 0x9c, 0xb0, 0x6f, 0xbd, 0xae, 0xb8, 0xaa } };
+#else
+extern static const GUID IID_IVdjPluginPosition8;
+#endif
+
 //////////////////////////////////////////////////////////////////////////
 
 #endif
