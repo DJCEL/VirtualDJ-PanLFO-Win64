@@ -2,4 +2,4 @@
 # VirtualDJ-PanLFO-Win64
 A VirtualDJ Audio Effect for Windows 64-bit (.dll)
 
-Move the sound between left to right channels at a defined speed (LFO)
+Move the sound between left and right channels at a defined speed (LFO)
