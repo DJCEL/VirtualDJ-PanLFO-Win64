@@ -7,13 +7,12 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "winres.h"
-
+#include "winres.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Anglais (Ã‰tats-Unis) resources
+// Anglais (États-Unis) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -49,7 +48,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,0
+ FILEVERSION 2,2,0,0
  PRODUCTVERSION 8,0,0,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
@@ -67,7 +66,7 @@ BEGIN
         BEGIN
             VALUE "Comments", "http://www.virtualdj.com/blog/djcel"
             VALUE "FileDescription", "VirtualDJ Sound Effect"
-            VALUE "FileVersion", "2, 1, 0, 0"
+            VALUE "FileVersion", "2.2.0.0"
             VALUE "InternalName", "PanLFO"
             VALUE "LegalCopyright", "Copyright (C) 2007-2025 DJ CEL"
             VALUE "OriginalFilename", "PanLFO"
@@ -81,7 +80,7 @@ BEGIN
     END
 END
 
-#endif    // Anglais (Ã‰tats-Unis) resources
+#endif    // Anglais (États-Unis) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -91,9 +90,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
-
+
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-
 

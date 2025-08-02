@@ -5,7 +5,6 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-
 #include <stdio.h>
 
 
@@ -25,47 +24,41 @@ public:
 	HRESULT VDJ_API OnGetUserInterface(TVdjPluginInterface8 *pluginInterface);
 	HRESULT VDJ_API OnStart();
 	HRESULT VDJ_API OnStop();
-	HRESULT VDJ_API OnProcessSamples(float *buffer,int nb);
+	HRESULT VDJ_API OnProcessSamples(float *buffer, int nb);
 
 private:
 	typedef enum _ID_Interface
 	{
-		ID_SWITCH_1,
+		ID_INIT,
 		ID_SLIDER_1,
 		ID_SLIDER_2,
+		ID_SLIDER_3,
 	} ID_Interface;
 
 	typedef enum _LFOCURVE
 	{
 		SINE,
-		SQUARE,
 		TRIANGLE,
-		SAWTOOTH
+		SAWTOOTH,
+		SQUARE
 	} LFOCURVE;
 
-
-	#define NB_CHAN 2
-
+	const int MAX_LFOCURVE = 4;
 
 	// Plugin Interface
-	int align;
-	float SliderValue[2];
+	HRESULT OnSlider(int id);
+	float m_SliderValue[3];
+	double m_Delay;
+	float m_Dry, m_Wet;
+	LFOCURVE m_LFOcurve;
 
 	// Other variables & functions
-	float m_Delay;
-	float m_Dry, m_Wet;
-	float coeffPan[NB_CHAN];
-	float out[NB_CHAN], in[NB_CHAN], in_panLFO[NB_CHAN];
-	
-	// LFO
-	int Bpm;
-	int StartPos;
-	int pos;
-	float xBeat;
-	float lfofreq;
+	float coeffPanLeft, coeffPanRight;
+	void UpdateAudioBalance(float x);
 
-        float LFO(LFOCURVE type,float frq,float x,float phi); // phi in degree
-	void UpdateCoeffPan(float x);
+	// LFO
+	double m_SongPosBeatsStart;
+    float LFO(LFOCURVE type, double t);
 };
 
 #endif /* PANLFO8_H */ 
