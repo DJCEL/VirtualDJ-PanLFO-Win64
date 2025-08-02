@@ -100,8 +100,8 @@ HRESULT VDJ_API CPanLFO8::OnGetParameterString(int id, char *outParam, int outPa
 			break;
 
 		case ID_SLIDER_2:
-			if (Delay == 0.0f) sprintf_s(outParam, outParamSize,"OFF");
-			else if (Delay < 1.0f) sprintf_s(outParam, outParamSize,"1/%.0f beat", 1 / m_Delay);
+			if (m_Delay == 0.0f) sprintf_s(outParam, outParamSize,"OFF");
+			else if (m_Delay < 1.0f) sprintf_s(outParam, outParamSize,"1/%.0f beat", 1 / m_Delay);
 			else sprintf_s(outParam, outParamSize,"%.0f beat(s)", m_Delay);
 			break;
 
@@ -201,5 +201,6 @@ void CPanLFO8::UpdateCoeffPan(float x)
 		coeffPan[1] = 1.0f;
 	}
 }
+
 
 
