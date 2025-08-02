@@ -1,4 +1,4 @@
-⁸﻿#include "PanLFO8.h"
+#include "PanLFO8.h"
 
 //-----------------------------------------------------------------------------
 CPanLFO8::CPanLFO8()
@@ -42,7 +42,7 @@ HRESULT VDJ_API CPanLFO8::OnGetPluginInfo(TVdjPluginInfo8 *infos)
 	infos->Author = "DJ CEL";
 	infos->PluginName = "PanLFO";
 	infos->Description = "Pan synchonysed on the beat";
-	infos->Version = "2.0";
+	infos->Version = "2.1";
 	infos->Flags = 0x00;
 
 	return S_OK;
@@ -100,7 +100,9 @@ HRESULT VDJ_API CPanLFO8::OnGetParameterString(int id, char *outParam, int outPa
 			break;
 
 		case ID_SLIDER_2:
-			sprintf_s(outParam, outParamSize,"%.2f beat(s)", Delay);
+			if (Delay == 0.0f) sprintf_s(outParam, outParamSize,"OFF");
+			else if (Delay < 1.0f) sprintf_s(outParam, outParamSize,"1/%.0f beat", 1 / Delay);
+			else sprintf_s(outParam, outParamSize,"%.0f beat(s)", Delay);
 			break;
 
 	}
@@ -199,3 +201,4 @@ void CPanLFO8::UpdateCoeffPan(float x)
 		coeff[1] = 1.0f;
 	}
 }
+
