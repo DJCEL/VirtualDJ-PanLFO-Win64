@@ -58,8 +58,9 @@ private:
 
 	// LFO
 	double m_SongPosBeatsStart;
-    float LFO(LFOCURVE type, double t);
+    	float LFO(LFOCURVE type, double x);
 };
 
 #endif /* PANLFO8_H */ 
+
 
