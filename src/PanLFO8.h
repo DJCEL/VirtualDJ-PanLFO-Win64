@@ -52,9 +52,9 @@ private:
 	float SliderValue[2];
 
 	// Other variables & functions
-	float Delay;
+	float m_Delay;
 	float m_Dry, m_Wet;
-	float coeff[NB_CHAN];
+	float coeffPan[NB_CHAN];
 	float out[NB_CHAN], in[NB_CHAN], in_panLFO[NB_CHAN];
 	
 	// LFO
@@ -64,8 +64,9 @@ private:
 	float xBeat;
 	float lfofreq;
 
-    float LFO(LFOCURVE type,float frq,float x,float phi); // phi in degree
+        float LFO(LFOCURVE type,float frq,float x,float phi); // phi in degree
 	void UpdateCoeffPan(float x);
 };
 
 #endif /* PANLFO8_H */ 
+
