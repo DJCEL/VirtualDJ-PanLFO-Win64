@@ -9,11 +9,11 @@ CPanLFO8::CPanLFO8()
 	xBeat = 0;
 	lfofreq = 0;
 	align = 0;
-	Delay = 0;
+	m_Delay = 0;
 	m_Dry = 0;
 	m_Wet = 0;
 	ZeroMemory(SliderValue, 2 * sizeof(float));
-	ZeroMemory(coeff, NB_CHAN * sizeof(float));
+	ZeroMemory(coeffPan, NB_CHAN * sizeof(float));
 	ZeroMemory(out, NB_CHAN * sizeof(float));
 	ZeroMemory(in, NB_CHAN * sizeof(float));
 	ZeroMemory(in_panLFO, NB_CHAN * sizeof(float));
@@ -41,7 +41,7 @@ HRESULT VDJ_API CPanLFO8::OnGetPluginInfo(TVdjPluginInfo8 *infos)
 {
 	infos->Author = "DJ CEL";
 	infos->PluginName = "PanLFO";
-	infos->Description = "Pan synchonysed on the beat";
+	infos->Description = "Pan synchronysed on the beat";
 	infos->Version = "2.1";
 	infos->Flags = 0x00;
 
@@ -73,18 +73,18 @@ HRESULT VDJ_API CPanLFO8::OnParameter(int id)
 			break;
 
 		case ID_SLIDER_2:
-				 if (SliderValue[1]==0.0f)                               Delay=0.125f;
-			else if (SliderValue[1]>0.0f     && SliderValue[1]<0.125f)   Delay=0.25f;
-			else if (SliderValue[1]>=0.125f  && SliderValue[1]<0.25f)    Delay=0.5f;
-			else if (SliderValue[1]>=0.25f   && SliderValue[1]<0.375f)   Delay=1.0f;
-			else if (SliderValue[1]>=0.375f  && SliderValue[1]<0.5f)     Delay=2.0f;
-			else if (SliderValue[1]>=0.5f    && SliderValue[1]<0.625f)   Delay=4.0f;
-			else if (SliderValue[1]>=0.625   && SliderValue[1]<0.75f)    Delay=6.0f;
-			else if (SliderValue[1]>=0.75f   && SliderValue[1]<0.875f)   Delay=8.0f;
-			else if (SliderValue[1]>=0.875f  && SliderValue[1]<1.0f)     Delay=16.0f;
-			else if (SliderValue[1]==1.0f)                               Delay=32.0f;
+				 if (SliderValue[1]==0.0f)                           m_Delay=0.125f;
+			else if (SliderValue[1]>0.0f     && SliderValue[1]<0.125f)   m_Delay=0.25f;
+			else if (SliderValue[1]>=0.125f  && SliderValue[1]<0.25f)    m_Delay=0.5f;
+			else if (SliderValue[1]>=0.25f   && SliderValue[1]<0.375f)   m_Delay=1.0f;
+			else if (SliderValue[1]>=0.375f  && SliderValue[1]<0.5f)     m_Delay=2.0f;
+			else if (SliderValue[1]>=0.5f    && SliderValue[1]<0.625f)   m_Delay=4.0f;
+			else if (SliderValue[1]>=0.625   && SliderValue[1]<0.75f)    m_Delay=6.0f;
+			else if (SliderValue[1]>=0.75f   && SliderValue[1]<0.875f)   m_Delay=8.0f;
+			else if (SliderValue[1]>=0.875f  && SliderValue[1]<1.0f)     m_Delay=16.0f;
+			else if (SliderValue[1]==1.0f)                               m_Delay=32.0f;
 
-			lfofreq = 1 / Delay;
+			lfofreq = 1 / m_Delay;
 			break;
 	}
 
@@ -101,8 +101,8 @@ HRESULT VDJ_API CPanLFO8::OnGetParameterString(int id, char *outParam, int outPa
 
 		case ID_SLIDER_2:
 			if (Delay == 0.0f) sprintf_s(outParam, outParamSize,"OFF");
-			else if (Delay < 1.0f) sprintf_s(outParam, outParamSize,"1/%.0f beat", 1 / Delay);
-			else sprintf_s(outParam, outParamSize,"%.0f beat(s)", Delay);
+			else if (Delay < 1.0f) sprintf_s(outParam, outParamSize,"1/%.0f beat", 1 / m_Delay);
+			else sprintf_s(outParam, outParamSize,"%.0f beat(s)", m_Delay);
 			break;
 
 	}
@@ -150,7 +150,7 @@ HRESULT VDJ_API CPanLFO8::OnProcessSamples(float *buffer,int nb)
 		{
 			in[ch] = buffer[2*i+ch];
 
-			in_panLFO[ch] = coeff[ch] * in[ch];
+			in_panLFO[ch] = coeffPan[ch] * in[ch];
 
 		        out[ch] = m_Dry * in[ch] + m_Wet * in_panLFO[ch];
 
@@ -192,13 +192,14 @@ void CPanLFO8::UpdateCoeffPan(float x)
 {
 	if(x>=0 && x<=0.5f)
 	{
-		coeff[0] = 1.0f;
-		coeff[1] = 2.0f * x;
+		coeffPan[0] = 1.0f;
+		coeffPan[1] = 2.0f * x;
 	}
 	else if (x>0.5f && x<=1.0f)
 	{
-		coeff[0] = 2.0f * (1.0f - x);
-		coeff[1] = 1.0f;
+		coeffPan[0] = 2.0f * (1.0f - x);
+		coeffPan[1] = 1.0f;
 	}
 }
+
 
